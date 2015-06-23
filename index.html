@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <meta name="description" content="Create custom WoW items to share with friends">
+    <meta name="author" content="Antoine Dahan">
+    <link rel="icon" href="treasure_chest.png">
+
+    <title>looted.link</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="../item.css">
+
+    <link href="css/jumbotron-narrow.css" rel="stylesheet">
+
+    <style>
+      .text-input {
+        width: 50%;
+        font-size: 160%;
+        padding: 20px 6px;
+      }
+    </style>
+
+    <script src="js/jquery-1.11.3.min.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="item.css">
+  </head>
+
+  <body>
+
+    <div class="container" style="margin-bottom: 10px;">
+      <div style=" width: 50%; margin: 60px auto;">
+        <img style="margin-left: 50px;" src="img/treasure_chest.png">
+        <h1 style="font-size: 400%;">looted.link</h1>
+      </div>
+
+      <div class="jumbotron">
+        <p class="lead" style="font-size: 260%;">Create custom WoW items that you can share with friends</p>
+        <style>
+            .btn-success {
+                background-color: #a335ee;
+                border-color: #a335f4;
+            }
+
+            .btn-success:hover, .btn-success:focus {
+                background-color: #9966FF;
+                border-color: #9974FF;
+            }
+        </style>
+        <p><a class="btn btn-lg btn-success" href="http://104.131.219.239:3000/create" role="button">Create an item</a></p>
+      </div>
+
+      <style>
+        a {
+            color: #a335ee;
+        }
+
+        a:hover {
+            color: #9966FF;
+        }
+      </style> 
+            
+      <footer class="footer">
+        <div class="row">
+          <p class="col-lg-6"> © <a href="http://www.antoinedahan.com">Antoine Dahan</a> 2015</p>
+        </div>
+      </footer>
+
+      <script>
+
+        jQuery(document).ready(function() {
+
+          $( "#durability-numerator" ).keypress(function() {
+            $("#durability-text" ).html($( "#durability-numerator" ).html() + "/" + $( "#durability-denominator" ).html());
+          });
+        });
+
+      </script>
+
+    </div> <!-- /container -->
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

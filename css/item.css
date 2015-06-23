@@ -1,0 +1,35 @@
+#wow-item-description {
+    /*background:#F8F8F8;
+    border: 5px solid #DFDFDF;
+    color: #717171;
+    font-size: 13px;
+    height: 30px;
+    letter-spacing: 1px;
+    line-height: 30px;
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+    top: -80px;
+    left:-30px;
+    display:none;
+    padding:0 20px;*/
+    height: 240px;
+    width: 240px;
+    background-image: url("../img/default.png");
+    background-color: #34394D;
+    color: white;
+    font-family: Verdana,"Open Sans",Arial,"Helvetica Neue",Helvetica,sans-serif;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+#wow-item-description div div {
+    margin-bottom: 0.5px;
+}
+
+.item-paragraph {
+    margin-top:20%;
+    float:left;
+    position:relative;
+    cursor:pointer;
+}

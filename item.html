@@ -1,0 +1,163 @@
+<html>
+    <head>
+
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/jumbotron-narrow.css" rel="stylesheet">
+
+        <link rel="stylesheet" type="text/css" href="../css/item.css">
+
+        <script src="../js/jquery-1.11.3.min.js"></script>
+
+        <script>
+
+        function showItemBox(itemInfo) {
+
+            // to get rendered height, use jquerey height function
+            //document.getElementById("wow-item-description").style.backgroundSize = "500px 400px";
+
+            document.getElementById("wow-item-description").style.height = "auto";
+            document.getElementById("wow-item-description").style.width = "auto";
+
+            document.getElementById("wow-item-description").innerHTML = "";
+            document.getElementById("wow-item-description").style.display = "block";
+
+            var $textContainer = $("<div>", {});
+            $textContainer.css({"padding": "50px 70px 50px 70px"});
+
+            $itemName = $("<div>", {});
+            $itemName.css({"color": "#1eff00", "font-size": "16px"});
+            $itemName.html(itemInfo[0]);
+            $textContainer.append($itemName);
+
+
+            $soulboundText = $("<div>", {});
+            $soulboundText.css({"color": "white", "font-size": "14px"});
+            $soulboundText.html("Soulbound");
+            $textContainer.append($soulboundText);
+
+
+            $uniqueEquippedText = $("<div>", {});
+            $uniqueEquippedText.css({"color": "white", "font-size": "14px"});
+            $uniqueEquippedText.html("Unique Equipped");
+            $textContainer.append($uniqueEquippedText);
+
+            $equipmentTypeText = $("<div>", {});
+            $equipmentTypeText.css({"color": "white", "font-size": "14px"});
+            $equipmentTypeText.html(itemInfo[1]);
+            $textContainer.append($equipmentTypeText);
+
+            $statOneText = $("<div>", {});
+            $statOneText.css({"color": "white", "font-size": "14px"});
+            $statOneText.html(itemInfo[6]);
+            $textContainer.append($statOneText);
+
+            $statTwoText = $("<div>", {});
+            $statTwoText.css({"color": "white", "font-size": "14px"});
+            $statTwoText.html(itemInfo[7]);
+            $textContainer.append($statTwoText);
+
+            $statThreeText = $("<div>", {});
+            $statThreeText.css({"color": "white", "font-size": "14px"});
+            $statThreeText.html(itemInfo[8]);
+            $textContainer.append($statThreeText);
+
+            $durabilityText = $("<div>", {});
+            $durabilityText.css({"color": "white", "font-size": "14px"});
+            $durabilityText.html(itemInfo[3] + "/" + itemInfo[4]);
+            $textContainer.append($durabilityText);
+
+            $levelRequirementText = $("<div>", {});
+            $levelRequirementText.css({"color": "white", "font-size": "14px"});
+            $levelRequirementText.html("Requires level " + itemInfo[5]);
+            $textContainer.append($levelRequirementText);
+
+            $bonusEffectOneText = $("<div>", {});
+            $bonusEffectOneText.css({"color": "#1eff00", "font-size": "14px"});
+            $bonusEffectOneText.html("Equip: " + itemInfo[9]);
+            $textContainer.append($bonusEffectOneText);
+
+            $bonusEffectTwoText = $("<div>", {});
+            $bonusEffectTwoText.css({"color": "#1eff00", "font-size": "14px"});
+            $bonusEffectTwoText.html("Equip: " + itemInfo[10]);
+            $textContainer.append($bonusEffectTwoText);
+            
+            $("#wow-item-description").append($textContainer);
+
+            // set background size after everything has been added
+            var backgroundSize = $("#wow-item-description").width() + "px " + $("#wow-item-description").height() + "px";
+            $("#wow-item-description").css({"background-size": backgroundSize});
+
+        }
+
+        function hideItemBox() {
+            $("#wow-item-description").hide();
+        }
+
+        function server() {
+            var thisUrl = window.location.href;
+
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("GET","http://104.131.219.239:3000/stats/" + 
+                thisUrl.substring(thisUrl.indexOf('item/') + 5), true);
+            xmlhttp.onreadystatechange=function() {
+                if(xmlhttp.readyState==4 && xmlhttp.status==200) {
+                    itemInfo = xmlhttp.responseText;
+
+                    itemInfoArray = itemInfo.split("|<||@");
+
+                    $( "#item-paragraph" ).on( "mouseover", function() {
+                        showItemBox(itemInfoArray); 
+                    });
+
+                    $( "#item-paragraph" ).on( "mouseout", hideItemBox );
+
+                    if(itemInfoArray[2] == -1) {
+                        $( "#item-logo" ).attr("src", "../img/items/" + 
+                            itemInfoArray[1] + "/0.png");
+                    }
+                    else {
+                        $( "#item-logo" ).attr("src", "../img/items/" + 
+                            itemInfoArray[1] + "/" +itemInfoArray[2] + ".png");
+                   }
+                   
+                 }
+           }
+
+           xmlhttp.send();
+        }
+
+        //alert(window.location.href);
+
+        server();
+        
+        </script>
+
+    </head>
+    <body>
+        <div class="container" style="margin-bottom: 10px;">
+            <p id="item-paragraph" class="item-paragraph"><img id="item-logo">
+                <span id="wow-item-description" style="display:none;"></span>
+            </p>
+
+            <div style="margin-top: 80%;"></div>
+
+            <style>
+                a {
+                    color: #a335ee;
+                }
+
+                a:hover {
+                    color: #9966FF;
+                }
+            </style>    
+            <footer class="footer">
+                <div class="row">
+                <p class="col-lg-6"> © <a href="http://www.antoinedahan.com">Antoine Dahan</a> 2015</p>
+                <p class="col-lg-6">Build your own at <a href="http://www.looted.link">looted.link</a> and share the URL of the item with friends.</p>
+                </div>
+            </footer>
+        </div>
+    </body>
+
+    
+</html>

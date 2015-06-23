@@ -1,0 +1,247 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <meta name="description" content="Create custom WoW items to share with friends">
+    <meta name="author" content="Antoine Dahan">
+    <link rel="icon" href="treasure_chest.png">
+
+    <title>looted.link</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="css/jumbotron-narrow.css" rel="stylesheet">
+
+    <style>
+      .text-input {
+        width: 50%;
+        font-size: 160%;
+        padding: 20px 6px;
+      }
+
+      .item-icon-select {
+        margin-left: 10px;
+        margin-bottom: 10px;
+      }
+    </style>
+
+    <script src="js/jquery-1.11.3.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <div class="container" style="margin-bottom: 10px;">
+      <div style=" width: 50%; margin: 60px auto;">
+        <img style="margin-left: 50px;" src="img/treasure_chest.png">
+        <h1 style="font-size: 400%;">looted.link</h1>
+      </div>
+
+      <form style="margin-bottom: 5px;" action="http://104.131.219.239:3000/createitem" method="post">
+
+        <div class="form-group">
+          <label for="item-name" style="color: #a335ee;">Item Name</label>
+          <input type="text" class="form-control text-input" id="item-name" name="name" value="Strider Mantle">
+        </div>
+
+        <div class="form-group">
+          <label for="item-slot" style="color: #a335ee;">Item Slot</label>
+          <select id="item-slot" name="slot" class="form-control" style="font-size: 160%; width: 50%; height: 150%;">
+            <option>Head</option>
+            <option>Neck</option>
+            <option>Shoulder</option>
+            <option>Chest</option>
+            <option>Wrist</option>
+            <option>Hands</option>
+            <option>Legs</option>
+            <option>Feet</option>
+            <option>Weapon</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="item-icon-selection-area" style="color: #a335ee;">Select Icon</label> <br/>
+          <div id="item-icon-selection-area">
+
+          </div>
+
+          <input id="selected-icon" name="iconNumber" value="-1" type="hidden">
+        </div>
+
+        <script>
+          function populateItemIconChoices(item_type) {
+
+            $( "#item-icon-selection-area" ).html("");
+
+            var numberOfItems = 0;
+            switch(item_type) {
+              case "Head":
+                numberOfItems = 200;
+                break;
+              case "Neck":
+                numberOfItems = 5;
+                break;
+              case "Shoulder":
+                numberOfItems = 198;
+                break;
+              case "Chest":
+                numberOfItems = 39;
+                break;
+              case "Wrist":
+                numberOfItems = 174;
+                break;
+              case "Hands":
+                numberOfItems = 84;
+                break;
+              case "Legs":
+                numberOfItems = 17;
+                break;
+              case "Feet":
+                numberOfItems = 13;
+                break;
+              case "Weapon":
+                numberOfItems = 303;
+                break;
+
+              default:
+                numberOfItems = 0;
+                break;
+            }
+
+            for(var i = 0; i < numberOfItems; i++)
+            {
+              var anIconImage = $('<img class="item-icon-select" id="' + i + '" width="64px" height="64px">'); //Equivalent: $(document.createElement('img'))
+              anIconImage.attr('src', "img/items/" + item_type + "/" + i + ".png");
+              anIconImage.click(function(event) {
+                var previousSelectedIconNumber = $( "#selected-icon" ).val();
+
+                if(previousSelectedIconNumber != -1)
+                { 
+                  $( "#" + previousSelectedIconNumber ).css({"border-width": "0px"});
+                }
+
+                $( "#selected-icon" ).val(event.target.id).trigger('change');
+
+                jQuery(this).css({"border-color": "#a335ee", 
+                  "border-width":"6px", 
+                  "border-style":"solid"
+                });
+              });
+
+              anIconImage.appendTo('#item-icon-selection-area');
+            }
+          }
+
+          $( "#item-slot" ).val("Legs");
+          populateItemIconChoices($( "#item-slot" ).find(":selected").text());
+
+          $( "#item-slot" ).change(function() {
+            populateItemIconChoices($( "#item-slot" ).find(":selected").text());
+            $( "#selected-icon" ).val(-1);
+          });
+
+        </script>
+
+        <div class="form-group">
+          <label for="durability-numerator" style="color: #a335ee;">Durability</label> <br/>
+          <input type="number" style="width: 15%;" min="0" max="9999" class="" id="durability-numerator" name="durabilityNumerator" value="185"> <span style="font-size: 140%; margin: auto 4px;">/</span> <input type="number" style="width: 15%;" min="1" max="9999" class="" id="durability-denominator" name="durabilityDenominator" value="185">
+        </div>
+
+        <div class="form-group">
+          <label for="level-required" style="color: #a335ee;">Level Required</label> <br/>
+          <input type="number" style="width: 12%;" min="1" max="100" class="" id="levelRequired" name="levelRequired" value="80">
+        </div>
+
+        <div class="form-group">
+          <label for="stat-1" style="color: #a335ee;">Stats</label> <br/>
+          <input type="text" style="width: 70%; padding-left: 4px;" min="1" max="100" class="" id="stat-1" name="statOne" value="+240 Stamina">
+
+          <br/><div style="margin-bottom: 10px;"></div>
+          <input type="text" style="width: 70%; padding-left: 4px;" min="1" max="100" class="" id="stat-2" name="statTwo"  value="+183 Intellect">
+
+          <br/><div style="margin-bottom: 10px;"></div>
+          <input type="text" style="width: 70%; padding-left: 4px;" min="1" max="100" class="" id="stat-3" name="statThree"  value="+202 Spirit">
+        </div>
+
+        <div class="form-group">
+          <label for="bonus-ability-1" style="color: #a335ee;">Bonus Abilities</label> <br/>
+          <span style="font-size: 110%; margin: auto 4px;">Equip: </span> <input type="text" style="width: 70%; padding-left: 4px;" min="1" max="100" class="" id="bonus-ability-1" name="bonusOne" value="Increases your intellect by 122.">
+          <br/><div style="margin-bottom: 10px;"></div>
+          <span style="font-size: 110%; margin: auto 4px;">Equip: </span> <input type="text" style="width: 70%; padding-left: 4px;" min="1" max="100" class="" id="bonus-ability-2" name="bonusTwo" value="Increases your spell power by 1278.">
+        </div>
+        
+        <style>
+
+          .btn-success {
+              background-color: #a335ee;
+              border-color: #a335f4;
+          }
+
+          .btn-success:hover, .btn-success:focus {
+              background-color: #9966FF;
+              border-color: #9974FF;
+          }
+
+        </style>
+        <div class="form-group" style="width: 30%; margin: 40px auto;">
+          <button type="submit" class="btn btn-default btn-lg btn-success">Create Item</button>
+        </div>
+
+      </form>
+
+      <style>
+        a {
+            color: #FF6600;
+        }
+
+        a:hover {
+            color: #CC6633;
+        }
+      </style> 
+            
+      <style>
+        a {
+            color: #a335ee;
+        }
+
+        a:hover {
+            color: #9966FF;
+        }
+      </style> 
+            
+      <footer class="footer">
+        <div class="row">
+          <p class="col-lg-6"> © <a href="http://www.antoinedahan.com">Antoine Dahan</a> 2015</p>
+        </div>
+      </footer>
+
+      <script>
+
+        jQuery(document).ready(function() {
+
+          $( "#durability-numerator" ).keypress(function() {
+            $("#durability-text" ).html($( "#durability-numerator" ).html() + "/" + $( "#durability-denominator" ).html());
+          });
+
+          /*$.ajax({
+            url: '/createitem',
+            complete: function(data) {
+              console.log(data);
+            }
+          });*/
+        });
+
+      </script>
+
+    </div> <!-- /container -->
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
