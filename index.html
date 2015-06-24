@@ -36,9 +36,25 @@
 
   <body>
 
+        <style>
+      
+      .logo-area {
+        margin: 10% auto;
+        width: 50%;
+      }
+
+      @media only screen and (max-device-width:480px) {
+        .logo-area {
+          margin: 8% auto;
+          width: 80%;
+        }
+      }
+
+    </style>
+
     <div class="container" style="margin-bottom: 10px;">
-      <div style=" width: 50%; margin: 60px auto;">
-        <img style="margin-left: 50px;" src="img/treasure_chest.png">
+      <div class="logo-area">
+        <img style="margin-left: 40px;" src="img/treasure_chest.png">
         <h1 style="font-size: 400%;">looted.link</h1>
       </div>
 
@@ -55,7 +71,7 @@
                 border-color: #9974FF;
             }
         </style>
-        <p><a class="btn btn-lg btn-success" href="http://104.131.219.239:3000/create" role="button">Create an item</a></p>
+        <p><a class="btn btn-lg btn-success" href="http://looted.link/create" role="button">Create an item</a></p>
       </div>
 
       <style>

@@ -3,3 +3,6 @@ img/*
 
 node_modules
 node_modules/*
+
+looted_server_info
+looted_server_info/*

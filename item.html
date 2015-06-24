@@ -24,62 +24,97 @@
             var $textContainer = $("<div>", {});
             $textContainer.css({"padding": "50px 70px 50px 70px"});
 
-            $itemName = $("<div>", {});
-            $itemName.css({"color": "#1eff00", "font-size": "16px"});
-            $itemName.html(itemInfo[0]);
-            $textContainer.append($itemName);
+            var color = "#1eff00";
 
+            if(typeof itemInfo[12] != 'undefined') {
+
+                if(itemInfo[12] == "Rare") {
+                    color = "#0070dd";
+                }
+
+                else if(itemInfo[12] == "Epic") {
+                    color = "#a335ee";
+                }
+            }
+
+            if(typeof itemInfo[1] != 'undefined' && itemInfo[1].trim().length > 0) {
+                $itemName = $("<div>", {});
+                $itemName.css({"color": color, "font-size": "18px"});
+                $itemName.html(itemInfo[0]);
+                $textContainer.append($itemName);
+            }
 
             $soulboundText = $("<div>", {});
             $soulboundText.css({"color": "white", "font-size": "14px"});
             $soulboundText.html("Soulbound");
             $textContainer.append($soulboundText);
 
-
             $uniqueEquippedText = $("<div>", {});
             $uniqueEquippedText.css({"color": "white", "font-size": "14px"});
             $uniqueEquippedText.html("Unique Equipped");
             $textContainer.append($uniqueEquippedText);
 
-            $equipmentTypeText = $("<div>", {});
-            $equipmentTypeText.css({"color": "white", "font-size": "14px"});
-            $equipmentTypeText.html(itemInfo[1]);
-            $textContainer.append($equipmentTypeText);
+            if(typeof itemInfo[1] != 'undefined' && itemInfo[1].trim().length > 0) {
+                $equipmentTypeText = $("<div>", {});
+                $equipmentTypeText.css({"color": "white", "font-size": "14px"});
+                $equipmentTypeText.html(itemInfo[1]);
+                $textContainer.append($equipmentTypeText);
+            }
 
-            $statOneText = $("<div>", {});
-            $statOneText.css({"color": "white", "font-size": "14px"});
-            $statOneText.html(itemInfo[6]);
-            $textContainer.append($statOneText);
+            if(typeof itemInfo[6] != 'undefined' && itemInfo[6].trim().length > 0) {
+                $statOneText = $("<div>", {});
+                $statOneText.css({"color": "white", "font-size": "14px"});
+                $statOneText.html(itemInfo[6]);
+                $textContainer.append($statOneText);
+            }
 
-            $statTwoText = $("<div>", {});
-            $statTwoText.css({"color": "white", "font-size": "14px"});
-            $statTwoText.html(itemInfo[7]);
-            $textContainer.append($statTwoText);
+            if(typeof itemInfo[7] != 'undefined' && itemInfo[7].trim().length > 0) {
+                $statTwoText = $("<div>", {});
+                $statTwoText.css({"color": "white", "font-size": "14px"});
+                $statTwoText.html(itemInfo[7]);
+                $textContainer.append($statTwoText);
+            }
 
-            $statThreeText = $("<div>", {});
-            $statThreeText.css({"color": "white", "font-size": "14px"});
-            $statThreeText.html(itemInfo[8]);
-            $textContainer.append($statThreeText);
+            if(typeof itemInfo[8] != 'undefined' && itemInfo[8].trim().length > 0) {
+                $statThreeText = $("<div>", {});
+                $statThreeText.css({"color": "white", "font-size": "14px"});
+                $statThreeText.html(itemInfo[8]);
+                $textContainer.append($statThreeText);
+            }
 
-            $durabilityText = $("<div>", {});
-            $durabilityText.css({"color": "white", "font-size": "14px"});
-            $durabilityText.html(itemInfo[3] + "/" + itemInfo[4]);
-            $textContainer.append($durabilityText);
+            if(typeof itemInfo[3] != 'undefined' && typeof itemInfo[4] != 'undefined' 
+                && itemInfo[3].trim().length > 0 && itemInfo[4].trim().length > 0) {
+                $durabilityText = $("<div>", {});
+                $durabilityText.css({"color": "white", "font-size": "14px"});
+                $durabilityText.html(itemInfo[3] + "/" + itemInfo[4]);
+                $textContainer.append($durabilityText);
+            }
 
             $levelRequirementText = $("<div>", {});
             $levelRequirementText.css({"color": "white", "font-size": "14px"});
             $levelRequirementText.html("Requires level " + itemInfo[5]);
             $textContainer.append($levelRequirementText);
 
-            $bonusEffectOneText = $("<div>", {});
-            $bonusEffectOneText.css({"color": "#1eff00", "font-size": "14px"});
-            $bonusEffectOneText.html("Equip: " + itemInfo[9]);
-            $textContainer.append($bonusEffectOneText);
+            if(typeof itemInfo[9] != 'undefined' && itemInfo[9].trim().length > 0) {
+                $bonusEffectOneText = $("<div>", {});
+                $bonusEffectOneText.css({"color": "#1eff00", "font-size": "14px"});
+                $bonusEffectOneText.html("Equip: " + itemInfo[9]);
+                $textContainer.append($bonusEffectOneText);
+            }
 
-            $bonusEffectTwoText = $("<div>", {});
-            $bonusEffectTwoText.css({"color": "#1eff00", "font-size": "14px"});
-            $bonusEffectTwoText.html("Equip: " + itemInfo[10]);
-            $textContainer.append($bonusEffectTwoText);
+            if(typeof itemInfo[10] != 'undefined' && itemInfo[10].trim().length > 0) {
+                $bonusEffectTwoText = $("<div>", {});
+                $bonusEffectTwoText.css({"color": "#1eff00", "font-size": "14px"});
+                $bonusEffectTwoText.html("Equip: " + itemInfo[10]);
+                $textContainer.append($bonusEffectTwoText);
+            }
+
+            if(typeof itemInfo[13] != 'undefined' && itemInfo[13].trim().length > 0) {
+                $descriptionText = $("<div>", {});
+                $descriptionText.css({"color": "#ffd100", "font-size": "14px"});
+                $descriptionText.html('"' + itemInfo[13] + '"');
+                $textContainer.append($descriptionText);
+            }
             
             $("#wow-item-description").append($textContainer);
 
@@ -97,7 +132,7 @@
             var thisUrl = window.location.href;
 
             xmlhttp = new XMLHttpRequest();
-            xmlhttp.open("GET","http://104.131.219.239:3000/stats/" + 
+            xmlhttp.open("GET","http://looted.link/stats/" + 
                 thisUrl.substring(thisUrl.indexOf('item/') + 5), true);
             xmlhttp.onreadystatechange=function() {
                 if(xmlhttp.readyState==4 && xmlhttp.status==200) {
@@ -153,7 +188,7 @@
             <footer class="footer">
                 <div class="row">
                 <p class="col-lg-6"> © <a href="http://www.antoinedahan.com">Antoine Dahan</a> 2015</p>
-                <p class="col-lg-6">Build your own at <a href="http://www.looted.link">looted.link</a> and share the URL of the item with friends.</p>
+                <p class="col-lg-6">Build your own at <a href="http://looted.link">looted.link</a> and share the URL of the item with friends.</p>
                 </div>
             </footer>
         </div>

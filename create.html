@@ -37,17 +37,42 @@
 
   <body>
 
+    <style>
+      
+      .logo-area {
+        margin: 10% auto;
+        width: 50%;
+      }
+
+      @media only screen and (max-device-width:480px) {
+        .logo-area {
+          margin: 8% auto;
+          width: 80%;
+        }
+      }
+
+    </style>
+
     <div class="container" style="margin-bottom: 10px;">
-      <div style=" width: 50%; margin: 60px auto;">
-        <img style="margin-left: 50px;" src="img/treasure_chest.png">
+      <div class="logo-area">
+        <img style="margin-left: 40px;" src="img/treasure_chest.png">
         <h1 style="font-size: 400%;">looted.link</h1>
       </div>
 
-      <form style="margin-bottom: 5px;" action="http://104.131.219.239:3000/createitem" method="post">
+      <form style="margin-bottom: 5px;" action="http://looted.link/createitem" method="post">
 
         <div class="form-group">
           <label for="item-name" style="color: #a335ee;">Item Name</label>
-          <input type="text" class="form-control text-input" id="item-name" name="name" value="Strider Mantle">
+          <input type="text" class="form-control text-input" id="item-name" name="name" placeholder="Item name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="rarity" style="color: #a335ee;">Rarity</label>
+          <select id="rarity" name="rarity" class="form-control" style="font-size: 160%; width: 50%; height: 150%;">
+            <option>Uncommon</option>
+            <option>Rare</option>
+            <option>Epic</option>
+          </select>
         </div>
 
         <div class="form-group">
@@ -82,7 +107,7 @@
             var numberOfItems = 0;
             switch(item_type) {
               case "Head":
-                numberOfItems = 200;
+                numberOfItems = 199;
                 break;
               case "Neck":
                 numberOfItems = 5;
@@ -160,20 +185,25 @@
 
         <div class="form-group">
           <label for="stat-1" style="color: #a335ee;">Stats</label> <br/>
-          <input type="text" style="width: 70%; padding-left: 4px;" min="1" max="100" class="" id="stat-1" name="statOne" value="+240 Stamina">
+          <input type="text" style="width: 70%; padding-left: 4px;" class="" id="stat-1" name="statOne" value="+240 Stamina">
 
           <br/><div style="margin-bottom: 10px;"></div>
-          <input type="text" style="width: 70%; padding-left: 4px;" min="1" max="100" class="" id="stat-2" name="statTwo"  value="+183 Intellect">
+          <input type="text" style="width: 70%; padding-left: 4px;" class="" id="stat-2" name="statTwo"  value="+183 Intellect">
 
           <br/><div style="margin-bottom: 10px;"></div>
-          <input type="text" style="width: 70%; padding-left: 4px;" min="1" max="100" class="" id="stat-3" name="statThree"  value="+202 Spirit">
+          <input type="text" style="width: 70%; padding-left: 4px;" class="" id="stat-3" name="statThree"  placeholder="+202 Spirit">
         </div>
 
         <div class="form-group">
           <label for="bonus-ability-1" style="color: #a335ee;">Bonus Abilities</label> <br/>
-          <span style="font-size: 110%; margin: auto 4px;">Equip: </span> <input type="text" style="width: 70%; padding-left: 4px;" min="1" max="100" class="" id="bonus-ability-1" name="bonusOne" value="Increases your intellect by 122.">
+          <span style="font-size: 110%; margin: auto 4px;">Equip: </span> <input type="text" style="width: 70%; padding-left: 4px;" class="" id="bonus-ability-1" name="bonusOne" value="Increases your intellect by 122.">
           <br/><div style="margin-bottom: 10px;"></div>
-          <span style="font-size: 110%; margin: auto 4px;">Equip: </span> <input type="text" style="width: 70%; padding-left: 4px;" min="1" max="100" class="" id="bonus-ability-2" name="bonusTwo" value="Increases your spell power by 1278.">
+          <span style="font-size: 110%; margin: auto 4px;">Equip: </span> <input type="text" style="width: 70%; padding-left: 4px;" class="" id="bonus-ability-2" name="bonusTwo" placeholder="Increases your spell power by 1278.">
+        </div>
+
+        <div class="form-group">
+          <label for="description" style="color: #a335ee;">Description</label> <br/>
+          <input type="text" style="width: 90%; padding-left: 4px;" id="description" name="description" placeholder="Although the item shows no visible signs of age, you get the impression that it is quite old.">
         </div>
         
         <style>

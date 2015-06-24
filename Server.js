@@ -42,12 +42,12 @@ statsRouter.use(function (req, res, next) {
         var levelReq = 80;
 
         //Querey for selecting from Name column by lastname: lastName
-        var queryString = "select name, slot, icon_number, durability_numerator, durability_denominator, level_required, stat_1, stat_2, stat_3, bonus_1, bonus_2, create_date from Items WHERE id=" + itemIndex;
+        var queryString = "select name, slot, icon_number, durability_numerator, durability_denominator, level_required, stat_1, stat_2, stat_3, bonus_1, bonus_2, create_date, rarity, description from Items WHERE id=" + connection.escape(itemIndex);
 
         connection.query(queryString, function(err, rows, fields) {
 
             if(rows != null) {
-                var itemInfo = Array(rows[0].name, rows[0].slot, rows[0].icon_number.toString(), rows[0].durability_numerator.toString(), rows[0].durability_denominator.toString(), rows[0].level_required.toString(), rows[0].stat_1, rows[0].stat_2, rows[0].stat_3, rows[0].bonus_1, rows[0].bonus_2, rows[0].create_date);
+                var itemInfo = Array(rows[0].name, rows[0].slot, rows[0].icon_number.toString(), rows[0].durability_numerator.toString(), rows[0].durability_denominator.toString(), rows[0].level_required.toString(), rows[0].stat_1, rows[0].stat_2, rows[0].stat_3, rows[0].bonus_1, rows[0].bonus_2, rows[0].create_date, rows[0].rarity, rows[0].description);
                 var itemInfoResponse = "";
 
                 console.log(rows[0].slot);
@@ -114,13 +114,13 @@ function createNewItem(res, requestOfBody) {
 
     console.log(requestOfBody.slot);
 
-    queryString = "INSERT INTO Items (name, slot, icon_number, durability_numerator, durability_denominator, level_required, stat_1, stat_2, stat_3, bonus_1, bonus_2, create_date) VALUES ('" + requestOfBody.name + "', '" + requestOfBody.slot + "', " + requestOfBody.iconNumber + ", " + requestOfBody.durabilityNumerator + ", " + requestOfBody.durabilityDenominator + ", " + requestOfBody.levelRequired + ", '" + requestOfBody.statOne + "', '" + requestOfBody.statTwo + "', '" + requestOfBody.statThree + "', '" + requestOfBody.bonusOne + "', '" + requestOfBody.bonusTwo + "', '" + nowDateTime + "');"
+    queryString = "INSERT INTO Items (name, slot, icon_number, durability_numerator, durability_denominator, level_required, stat_1, stat_2, stat_3, bonus_1, bonus_2, create_date, rarity, description) VALUES (" + connection.escape(requestOfBody.name) + ", " + connection.escape(requestOfBody.slot) + ", " + connection.escape(requestOfBody.iconNumber) + ", " + connection.escape(requestOfBody.durabilityNumerator) + ", " + connection.escape(requestOfBody.durabilityDenominator) + ", " + connection.escape(requestOfBody.levelRequired) + ", " + connection.escape(requestOfBody.statOne) + ", " + connection.escape(requestOfBody.statTwo) + ", " + connection.escape(requestOfBody.statThree) + ", " + connection.escape(requestOfBody.bonusOne) + ", " + connection.escape(requestOfBody.bonusTwo) + ", '" + nowDateTime + "', " + connection.escape(requestOfBody.rarity) + ", " + connection.escape(requestOfBody.description) + ");"
     
     console.log(queryString);
     //console.log(queryString);
     connection.query(queryString, function(err, rows, fields) {
         res.writeHead(301,
-            {Location: "http://104.131.219.239:3000/item/" + rows.insertId}
+            {Location: "http://looted.link/item/" + rows.insertId}
         );
         res.end();
     });
@@ -129,5 +129,3 @@ function createNewItem(res, requestOfBody) {
 }
 
 app.listen(3000);
-
-console.log("Running at Port 3000");
