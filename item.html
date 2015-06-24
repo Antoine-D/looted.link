@@ -1,5 +1,13 @@
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Create custom WoW items to share with friends">
+        <meta name="author" content="Antoine Dahan">
+        <link rel="icon" href="../img/treasure_chest.png">
+
+        <title>looted.link</title>
 
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/jumbotron-narrow.css" rel="stylesheet">
@@ -11,9 +19,6 @@
         <script>
 
         function showItemBox(itemInfo) {
-
-            // to get rendered height, use jquerey height function
-            //document.getElementById("wow-item-description").style.backgroundSize = "500px 400px";
 
             document.getElementById("wow-item-description").style.height = "auto";
             document.getElementById("wow-item-description").style.width = "auto";
@@ -161,8 +166,6 @@
            xmlhttp.send();
         }
 
-        //alert(window.location.href);
-
         server();
         
         </script>
@@ -192,6 +195,16 @@
                 </div>
             </footer>
         </div>
+
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-49936760-4', 'auto');
+            ga('send', 'pageview');
+        </script>
     </body>
 
     
