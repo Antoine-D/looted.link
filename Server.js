@@ -14,6 +14,10 @@ app.get('/create',function(req,res) {
     res.sendFile(path.join(__dirname+"/create.html"));
 });
 
+app.get('/api',function(req,res) {
+    res.sendFile(path.join(__dirname+"/api.html"));
+});
+
 /* Api Router */
 var apiRouter = express.Router();
 
