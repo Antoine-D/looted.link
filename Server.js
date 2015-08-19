@@ -14,6 +14,101 @@ app.get('/create',function(req,res) {
     res.sendFile(path.join(__dirname+"/create.html"));
 });
 
+/* Api Router */
+var apiRouter = express.Router();
+
+
+apiRouter.use(function (req, res, next) {
+
+    // Querey for selecting elements of the item
+    var queryString = "select name, " +
+        "slot, " +
+        "icon_number, " +
+        "durability_numerator, " +
+        "durability_denominator, " +
+        "level_required, " +
+        "stat_1, " +
+        "stat_2, " +
+        "stat_3, " +
+        "bonus_1, " +
+        "bonus_2, " +
+        "create_date, " +
+        "rarity, " +
+        "description " +
+        "from Items WHERE ";
+
+    var fullPathOfRequest = req.originalUrl.toLowerCase();
+
+    var mysql = require('mysql');
+    
+    var connection = mysql.createConnection({
+        host     : 'localhost',
+        user     : 'antoine',
+        password : 'santab22',
+        database : 'looted',
+    });
+
+    // api request for multiple items
+    if(fullPathOfRequest.indexOf("items") > -1)
+    {
+        if(fullPathOfRequest.indexOf("all") > -1)
+        {
+            queryString += "id>0";
+        }
+
+        else if(fullPathOfRequest.indexOf("quality") > -1)
+        {
+            var qualityIndex = fullPathOfRequest.indexOf("quality/") + "quality/".length;
+            var quality = fullPathOfRequest.substring(qualityIndex);
+            quality = quality.charAt(0).toUpperCase() + quality.slice(1);
+            queryString += ("rarity = " + connection.escape(quality));
+        }
+
+        else if(fullPathOfRequest.indexOf("slot") > -1)
+        {
+            var slotIndex = fullPathOfRequest.indexOf("slot/") + "slot/".length;
+            var slot = fullPathOfRequest.substring(slotIndex);
+            slot = slot.charAt(0).toUpperCase() + slot.slice(1);
+            queryString += ("slot = " + connection.escape(slot));
+        }
+
+        else
+        {
+            res.json("Could not interpret request, see looted.link/api for assistance.");
+            return;
+        }
+    }
+
+    // api request for single item
+    else if(fullPathOfRequest.indexOf("item") > -1)
+    {
+        var idNumberIndex = fullPathOfRequest.indexOf("item/") + "item/".length;
+        var idNumber = connection.escape(fullPathOfRequest.substring(idNumberIndex));
+        queryString += ("id = " + idNumber);
+    }
+
+    else
+    {
+        res.json("Could not interpret request, see looted.link/api for assistance.");
+        return;
+    }
+
+    //begin database connection
+    connection.connect();
+
+    connection.query(queryString, function(err, rows, fields) {
+
+        if(rows != null) {
+            var queryResults = {};
+            queryResults.items = rows;
+
+            res.json(queryResults);
+        }
+    });
+
+    connection.end();
+});
+
 var itemRouter = express.Router();
 var statsRouter = express.Router();
 
@@ -27,7 +122,7 @@ statsRouter.use(function (req, res, next) {
 
     if(fullPathOfRequest != null) {
         var itemIndex = fullPathOfRequest.substring(
-            fullPathOfRequest.indexOf('stats/') + 6);
+            fullPathOfRequest.indexOf("stats/") + "stats/".length);
 
         var mysql = require('mysql');
     
@@ -101,10 +196,11 @@ app.use("/css", express.static(__dirname + '/css'));
 app.use("/js", express.static(__dirname + '/js'));
 app.use("/img", express.static(__dirname + '/img'));
 
-// Registering the stats router (used in ajax call in item.html) and 
-// the item router (redirected to after creation of item)
+// Registering the routers
 app.use('/stats/', statsRouter)
 app.use('/item/', itemRouter);
+app.use('/api/', apiRouter);
+
 
 // Handle posts from the create item page
 app.post('/createitem', function(req, res) {
@@ -189,4 +285,4 @@ function createNewItem(res, requestOfBody) {
     connection.end();
 }
 
-app.listen(3000);
+app.listen(5000);
