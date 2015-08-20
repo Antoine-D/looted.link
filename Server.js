@@ -25,7 +25,8 @@ var apiRouter = express.Router();
 apiRouter.use(function (req, res, next) {
 
     // Querey for selecting elements of the item
-    var queryString = "select name, " +
+    var queryString = "select id, " +
+        "name, " +
         "slot, " +
         "icon_number, " +
         "durability_numerator, " +
@@ -51,6 +52,8 @@ apiRouter.use(function (req, res, next) {
         password : 'santab22',
         database : 'looted',
     });
+
+    var isSingleItem = false;
 
     // api request for multiple items
     if(fullPathOfRequest.indexOf("items") > -1)
@@ -89,6 +92,7 @@ apiRouter.use(function (req, res, next) {
         var idNumberIndex = fullPathOfRequest.indexOf("item/") + "item/".length;
         var idNumber = connection.escape(fullPathOfRequest.substring(idNumberIndex));
         queryString += ("id = " + idNumber);
+        isSingleItem = true;
     }
 
     else
@@ -102,11 +106,35 @@ apiRouter.use(function (req, res, next) {
 
     connection.query(queryString, function(err, rows, fields) {
 
-        if(rows != null) {
+        if(rows != null) 
+        {
             var queryResults = {};
             queryResults.items = rows;
 
-            res.json(queryResults);
+            for(var i = 0; i < queryResults.items.length; i++)
+            {
+                queryResults.items[i].link = "http://looted.link/item/" + queryResults.items[i].id.toString();
+            }
+
+            if(!isSingleItem)
+            {
+                res.json(queryResults);
+            }
+            
+            else if(queryResults.items.length > 0)
+            {
+                res.json(queryResults.items[0]);
+            }
+
+            else
+            {
+                res.json({});
+            }
+        }
+
+        else
+        {
+            res.json({});
         }
     });
 
