@@ -111,9 +111,13 @@ apiRouter.use(function (req, res, next) {
             var queryResults = {};
             queryResults.items = rows;
 
+            // add the link as an attribute and rename 'rarity' attribute to 'quailty'
             for(var i = 0; i < queryResults.items.length; i++)
             {
                 queryResults.items[i].link = "http://looted.link/item/" + queryResults.items[i].id.toString();
+                var qualityValue = queryResults.items[i].rarity;
+                delete queryResults.items[i].rarity;
+                queryResults.items[i].quality = qualityValue;
             }
 
             if(!isSingleItem)
