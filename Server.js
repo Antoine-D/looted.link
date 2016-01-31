@@ -191,7 +191,7 @@ statsRouter.use(function (req, res, next) {
 
         connection.query(queryString, function(err, rows, fields) {
 
-            if(rows != null) {
+            if(rows != null && Array.isArray(rows) && rows.length >= 1) {
 
                 var itemInfo = Array(
                     rows[0].name, 
